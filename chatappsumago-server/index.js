@@ -7,7 +7,7 @@ const { notFound, errorHandler } = require("./middleware/errorMiddleware");
 
 app.use(
   cors({
-    origin: "*",
+    origin: 'https://reactprojectlca-frontend.onrender.com',
   })
 );
 dotenv.config();
