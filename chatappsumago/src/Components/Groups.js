@@ -36,7 +36,7 @@ function Groups() {
     };
 
     axios
-      .get("https://reactprojectlca.onrender.com/chat/fetchGroups", config)
+      .get("https://reactprojectlca-frontend.onrender.com/chat/fetchGroups", config)
       .then((response) => {
         console.log("Group Data from API ", response.data);
         SetGroups(response.data);
