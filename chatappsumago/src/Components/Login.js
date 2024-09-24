@@ -58,7 +58,7 @@ function Login() {
       };
 
       const response = await axios.post(
-        "https://reactprojectlca.onrender.com/user/register/",
+        "https://reactprojectlca-frontend.onrender.com/user/register/",
         data,
         config
       );
