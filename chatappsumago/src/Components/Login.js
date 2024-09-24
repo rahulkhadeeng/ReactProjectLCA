@@ -30,7 +30,7 @@ function Login() {
       };
 
       const response = await axios.post(
-        "https://reactprojectlca.onrender.com/user/login/",
+        "https://localhost:4000/user/login/",
         data,
         config
       );
@@ -58,7 +58,7 @@ function Login() {
       };
 
       const response = await axios.post(
-        "https://reactprojectlca.onrender.com/user/register/",
+        "https://localhost:4000/user/register/",
         data,
         config
       );
