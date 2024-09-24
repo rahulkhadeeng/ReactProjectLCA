@@ -155,7 +155,7 @@ function ChatArea() {
       },
     };
     axios
-      .get("http://localhost:5000/message/" + chat_id, config)
+      .get("https://reactprojectlca.onrender.com/message/" + chat_id, config)
       .then(({ data }) => {
         setAllMessages(data);
         setloaded(true);
