@@ -94,7 +94,7 @@ function Users() {
                     },
                   };
                   axios.post(
-                    "http://localhost:5000/chat/",
+                    "https://reactprojectlca.onrender.com/chat/",
                     {
                       userId: user._id,
                     },
