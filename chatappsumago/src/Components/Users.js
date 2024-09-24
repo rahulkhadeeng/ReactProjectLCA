@@ -34,7 +34,7 @@ function Users() {
         Authorization: `Bearer ${userData.data.token}`,
       },
     };
-    axios.get("https://reactprojectlca-frontend.onrender.com/user/fetchUsers", config).then((data) => {
+    axios.get("https://localhost:4000/user/fetchUsers", config).then((data) => {
       console.log("UData refreshed in Users panel ");
       setUsers(data.data);
       // setRefresh(!refresh);
@@ -94,7 +94,7 @@ function Users() {
                     },
                   };
                   axios.post(
-                    "https://reactprojectlca-frontend.onrender.com/chat/",
+                    "https://localhost:4000/chat/",
                     {
                       userId: user._id,
                     },
