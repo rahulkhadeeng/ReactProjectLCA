@@ -77,8 +77,9 @@ import Skeleton from "@mui/material/Skeleton";
 import axios from "axios";
 import { myContext } from "./MainContainer";
 import io from "socket.io-client";
+import { API_URL } from "../api";
 
-const ENDPOINT = "http://localhost:4000";
+const ENDPOINT = API_URL;
 
 var socket, chat;
  
@@ -109,7 +110,7 @@ function ChatArea() {
     };
     axios
       .post(
-        "http://localhost:4000/message/",
+        `${API_URL}/message/`,
         {
           content: messageContent,
           chatId: chat_id,
@@ -155,7 +156,7 @@ function ChatArea() {
       },
     };
     axios
-      .get("http://localhost:4000/message/" + chat_id, config)
+      .get(`${API_URL}/message/` + chat_id, config)
       .then(({ data }) => {
         setAllMessages(data);
         setloaded(true);
