@@ -1,0 +1,6 @@
+.env
+*.env
+chatappsumago-server/.env
+chatappsumago/node_modules/
+chatappsumago-server/node_modules/
+
