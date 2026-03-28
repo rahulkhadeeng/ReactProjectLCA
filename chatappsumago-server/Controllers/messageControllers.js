@@ -50,4 +50,31 @@ const sendMessage = expressAsyncHandler(async (req, res) => {
   }
 });
 
-module.exports = { allMessages, sendMessage };
+const deleteMessage = expressAsyncHandler(async (req, res) => {
+  const messageId = req.params.messageId || req.body.messageId;
+  const message = await Message.findById(messageId);
+
+  if (!message) {
+    res.status(404);
+    throw new Error("Message not found");
+  }
+
+  if (message.sender.toString() !== req.user._id.toString()) {
+    res.status(403);
+    throw new Error("You can only unsend your own messages");
+  }
+
+  await Message.findByIdAndDelete(messageId);
+
+  const latestMessage = await Message.findOne({ chat: message.chat })
+    .sort({ _id: -1 })
+    .select("_id");
+
+  await Chat.findByIdAndUpdate(message.chat, {
+    latestMessage: latestMessage ? latestMessage._id : null,
+  });
+
+  res.json({ success: true, messageId });
+});
+
+module.exports = { allMessages, sendMessage, deleteMessage };

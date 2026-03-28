@@ -100,28 +100,58 @@ function ChatArea() {
   const [socketConnectionStatus, setSocketConnectionStatus]= useState(false);
 
 
-  const sendMessage = () => {
-    var data= null; 
-    console.log("SendMessage Fired to", chat_id._id);
+  const sendMessage = async () => {
+    const trimmedMessage = messageContent.trim();
+    if (!trimmedMessage) {
+      return;
+    }
+
+    console.log("SendMessage Fired to", chat_id);
     const config = {
       headers: {
         Authorization: `Bearer ${userData.data.token}`,
       },
     };
-    axios
-      .post(
+
+    try {
+      const { data } = await axios.post(
         `${API_URL}/message/`,
         {
-          content: messageContent,
+          content: trimmedMessage,
           chatId: chat_id,
         },
         config
-      )
-      .then(({ response }) => {
-        data= response;
-        console.log("Message Fired");
-      });
-      socket.emit("newMessage", data);
+      );
+
+      console.log("Message Fired");
+      setMessageContent("");
+      socket.emit("new message", data);
+      setRefresh(!refresh);
+    } catch (error) {
+      console.log("Message send failed", error);
+    }
+  };
+
+  const unsendMessage = async (messageId) => {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userData.data.token}`,
+      },
+    };
+
+    try {
+      await axios.post(
+        `${API_URL}/message/unsend`,
+        { messageId },
+        config
+      );
+      setAllMessages((currentMessages) =>
+        currentMessages.filter((message) => message._id !== messageId)
+      );
+      setRefresh(!refresh);
+    } catch (error) {
+      console.log("Message unsend failed", error);
+    }
   };
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -227,10 +257,16 @@ function ChatArea() {
               const self_id = userData.data._id;
               if (sender._id === self_id) {
                 // console.log("I sent it ");
-                return <MessageSelf props={message} key={index} />;
+                return (
+                  <MessageSelf
+                    props={message}
+                    key={message._id || index}
+                    onUnsend={unsendMessage}
+                  />
+                );
               } else {
                 // console.log("Someone Sent it");
-                return <MessageOthers props={message} key={index} />;
+                return <MessageOthers props={message} key={message._id || index} />;
               }
             })}
         </div>
@@ -245,10 +281,8 @@ function ChatArea() {
             }}
             onKeyDown={(event) => {
               if (event.code == "Enter") {
-                // console.log(event);
+                event.preventDefault();
                 sendMessage();
-                setMessageContent("");
-                setRefresh(!refresh);
               }
             }}
           />
@@ -256,7 +290,6 @@ function ChatArea() {
             className={"icon" + (lightTheme ? "" : " dark")}
             onClick={() => {
               sendMessage();
-              setRefresh(!refresh);
             }}
           >
             <SendIcon />

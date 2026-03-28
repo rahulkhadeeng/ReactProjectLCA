@@ -89,6 +89,12 @@ function CreateGroups() {
         </Dialog>
       </div>
       <div className={"createGroups-container" + (lightTheme ? "" : " dark")}>
+        <div className="create-groups-copy">
+          <p className="create-groups-title">Create a New Group</p>
+          <p className="create-groups-subtitle">
+            Give your circle a name and start a shared conversation.
+          </p>
+        </div>
         <input
           placeholder="Enter Group Name"
           className={"search-box" + (lightTheme ? "" : " dark")}

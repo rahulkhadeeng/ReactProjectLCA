@@ -93,11 +93,22 @@ function Login() {
       </Backdrop>
       <div className="login-container">
         <div className="image-container">
-          <img src={logo} alt="Logo" className="welcome-logo" />
+          <div className="brand-panel">
+            <span className="brand-badge">Realtime Chat</span>
+            <img src={logo} alt="Logo" className="welcome-logo" />
+            <p className="brand-heading">Connect with your people instantly.</p>
+            <p className="brand-copy">
+              Fast messaging, clean rooms, and a smoother way to keep every
+              conversation in one place.
+            </p>
+          </div>
         </div>
         {showlogin && (
           <div className="login-box">
             <p className="login-text">Login to your Account</p>
+            <p className="login-subtext">
+              Pick up where you left off and jump back into your conversations.
+            </p>
             <TextField
               onChange={changeHandler}
               id="standard-basic"
@@ -131,6 +142,7 @@ function Login() {
               variant="outlined"
               color="secondary"
               onClick={loginHandler}
+              className="auth-button"
               isLoading
             >
               Login
@@ -154,6 +166,10 @@ function Login() {
         {!showlogin && (
           <div className="login-box">
             <p className="login-text">Create your Account</p>
+            <p className="login-subtext">
+              Start chatting with a brighter, cleaner space built for everyday
+              conversations.
+            </p>
             <TextField
               onChange={changeHandler}
               id="standard-basic"
@@ -202,6 +218,7 @@ function Login() {
               variant="outlined"
               color="secondary"
               onClick={signUpHandler}
+              className="auth-button"
             >
               Sign Up
             </Button>

@@ -23,8 +23,12 @@ function Welcome() {
         alt="Logo"
         className="welcome-logo"
       />
-      <b>Hi , {userData.data.name} 👋</b>
-      <p>View and text directly to people present in the chat Rooms.</p>
+      <span className="welcome-badge">Live now</span>
+      <b className="welcome-heading">Hi, {userData.data.name}</b>
+      <p className="welcome-copy">
+        Dive into your chats, discover active people, and keep every message
+        flowing in one elegant space.
+      </p>
     </div>
   );
 }
