@@ -78,7 +78,7 @@ import axios from "axios";
 import { myContext } from "./MainContainer";
 import io from "socket.io-client";
 
-const ENDPOINT = "https://localhost:4000";
+const ENDPOINT = "http://localhost:4000";
 
 var socket, chat;
  
@@ -109,7 +109,7 @@ function ChatArea() {
     };
     axios
       .post(
-        "https://localhost:4000/message/",
+        "http://localhost:4000/message/",
         {
           content: messageContent,
           chatId: chat_id,
@@ -155,7 +155,7 @@ function ChatArea() {
       },
     };
     axios
-      .get("https://localhost:4000/message/" + chat_id, config)
+      .get("http://localhost:4000/message/" + chat_id, config)
       .then(({ data }) => {
         setAllMessages(data);
         setloaded(true);

@@ -9,7 +9,9 @@ const loginController = expressAsyncHandler(async (req, res) => {
   const user = await UserModel.findOne({ name });
 
   console.log("fetched user Data", user);
-  console.log(await user.matchPassword(password));
+  if (user) {
+    console.log(await user.matchPassword(password));
+  }
   if (user && (await user.matchPassword(password))) {
     const response = {
       _id: user._id,
@@ -39,14 +41,14 @@ const registerController = expressAsyncHandler(async (req, res) => {
   // pre-existing user
   const userExist = await UserModel.findOne({ email });
   if (userExist) {
-    // res.send(405);
+    res.status(405);
     throw new Error("User already Exists");
   }
 
   // userName already Taken
   const userNameExist = await UserModel.findOne({ name });
   if (userNameExist) {
-    // res.send(406);
+    res.status(406);
     throw new Error("UserName already taken");
   }
 

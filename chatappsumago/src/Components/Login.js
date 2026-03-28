@@ -5,6 +5,8 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Toaster from "./Toaster";
 
+const API_BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:4000";
+
 function Login() {
   const [showlogin, setShowLogin] = useState(false);
   const [data, setData] = useState({ name: "", email: "", password: "" });
@@ -30,18 +32,20 @@ function Login() {
       };
 
       const response = await axios.post(
-        "https://reactprojectlca.onrender.com/user/login/",
+        `${API_BASE_URL}/user/login`,
         data,
         config
       );
       console.log("Login : ", response);
       setLogInStatus({ msg: "Success", key: Math.random() });
       setLoading(false);
-      localStorage.setItem("userData", JSON.stringify(response));
+      localStorage.setItem("userData", JSON.stringify({ data: response.data }));
       navigate("/app/welcome");
     } catch (error) {
       setLogInStatus({
-        msg: "Invalid User name or Password",
+        msg:
+          error.response?.data?.message ||
+          "Invalid User name or Password",
         key: Math.random(),
       });
     }
@@ -58,29 +62,23 @@ function Login() {
       };
 
       const response = await axios.post(
-        "https://reactprojectlca.onrender.com/user/register/",
+        `${API_BASE_URL}/user/register`,
         data,
         config
       );
       console.log(response);
       setSignInStatus({ msg: "Success", key: Math.random() });
       navigate("/app/welcome");
-      localStorage.setItem("userData", JSON.stringify(response));
+      localStorage.setItem("userData", JSON.stringify({ data: response.data }));
       setLoading(false);
     } catch (error) {
       console.log(error);
-      if (error.response.status === 405) {
-        setLogInStatus({
-          msg: "User with this email ID already Exists",
-          key: Math.random(),
-        });
-      }
-      if (error.response.status === 406) {
-        setLogInStatus({
-          msg: "User Name already Taken, Please take another one",
-          key: Math.random(),
-        });
-      }
+      setSignInStatus({
+        msg:
+          error.response?.data?.message ||
+          "Unable to create account right now",
+        key: Math.random(),
+      });
       setLoading(false);
     }
   };

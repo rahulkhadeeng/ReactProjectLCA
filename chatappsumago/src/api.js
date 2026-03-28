@@ -1,5 +1,5 @@
 // src/api.js
-const API_URL = process.env.PORT || 4000;
+const API_URL = process.env.REACT_APP_API_URL || "http://localhost:4000";
 
 export const fetchData = async () => {
   const response = await fetch(`${API_URL}/endpoint`);
