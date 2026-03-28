@@ -33,7 +33,11 @@ export default function Toaster({ message }) {
         ]}
       >
 
-      <Alert onClose={handleClose} severity="warning" sx={{ width: '30vw' }}>
+      <Alert
+        onClose={handleClose}
+        severity="warning"
+        sx={{ width: { xs: "calc(100vw - 32px)", sm: "420px" }, maxWidth: "100%" }}
+      >
       {message}
       </Alert>
 

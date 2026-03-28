@@ -13,20 +13,23 @@
   
   .main-container {
     background-color: #f4f5f8;
-    height: 90vh;
-    width: 90vw;
+    min-height: min(90vh, 900px);
+    width: min(90vw, 1200px);
     display: flex;
     border-radius: 20px;
+    overflow: hidden;
   }
   
   .sidebar-container {
-    flex: 0.3;
+    flex: 0 0 320px;
+    min-width: 280px;
     display: flex;
     flex-direction: column;
   }
   
   .chatArea-container {
-    flex: 0.7;
+    flex: 1;
+    min-width: 0;
   }
   
   .sb-header {
@@ -60,9 +63,11 @@
     outline-width: 0;
     border: none;
     margin-left: 10px;
-    font-size: 1.25rem;
+    font-size: clamp(1rem, 1vw + 0.7rem, 1.25rem);
     color: rgba(0, 0, 0, 0.54);
     width: 100%;
+    min-width: 0;
+    background: transparent;
   }
   
   .sb-conversations {
@@ -73,6 +78,7 @@
     box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
       rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
     margin: 10px;
+    overflow: auto;
   }
   
   .conversation-container {
@@ -84,6 +90,7 @@
     margin: 5px;
     border-radius: 10px;
     box-sizing: border-box;
+    min-width: 0;
   }
   .conversation-container:hover {
     background-color: #d9d9d9;
@@ -120,6 +127,7 @@
     font-weight: bold;
     color: rgba(0, 0, 0, 0.54);
     text-transform: capitalize;
+    overflow-wrap: anywhere;
   }
   
   .other-message-container .conversation-container:hover
@@ -148,12 +156,14 @@
     font-weight: lighter;
     font-style: italic;
     color: rgba(0, 0, 0, 0.54);
+    overflow-wrap: anywhere;
   }
   
   .chatArea-container {
     display: flex;
     flex-direction: column;
-    flex: 0.7;
+    flex: 1;
+    min-width: 0;
   }
   
   .chatArea-header {
@@ -183,7 +193,7 @@
     padding: 10px 10px;
     margin: 10px;
     border-radius: 20px;
-    overflow: scroll;
+    overflow: auto;
     scrollbar-width: none;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
       rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
@@ -203,6 +213,8 @@
     border-radius: 20px;
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    gap: 10px;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
       rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
   }
@@ -212,10 +224,12 @@
     padding: 10px 10px;
     margin: 5px;
     border-radius: 20px;
-    width: max-content;
+    width: fit-content;
+    max-width: min(80%, 32rem);
     margin-top: 10px;
     display: flex;
     flex-direction: column;
+    overflow-wrap: anywhere;
   }
   
   .self-message-container {
@@ -227,11 +241,13 @@
     display: flex;
     flex-direction: column;
     background-color: #63d7b0;
-    width: max-content;
+    width: fit-content;
+    max-width: min(80%, 32rem);
     padding: 10px 10px;
     margin: 5px;
     border-radius: 20px;
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    overflow-wrap: anywhere;
   }
   
   .self-timeStamp {
@@ -242,11 +258,12 @@
   }
   
   .welcome-logo {
-    height: 20vw;
+    height: clamp(140px, 18vw, 260px);
+    max-width: 100%;
   }
   
   .welcome-container {
-    flex: 0.7;
+    flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -256,45 +273,53 @@
     color: rgba(0, 0, 0, 0.54);
     border-bottom: 5px solid #63d7b0;
     border-radius: 20px;
+    padding: 2rem;
+    text-align: center;
   }
   
   .createGroups-container {
-    flex: 0.7;
-    align-self: center;
+    flex: 1;
+    align-self: stretch;
     padding: 20px 10px;
     margin: 10px;
     background-color: white;
     border-radius: 20px;
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    gap: 10px;
   }
   
   .login-container {
-    height: 90vh;
-    width: 90vw;
+    min-height: min(90vh, 900px);
+    width: min(90vw, 1200px);
     background-color: #f4f5f8;
     border-radius: 20px;
     display: flex;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    overflow: hidden;
   }
   
   .image-container {
-    flex: 0.3;
+    flex: 0 0 34%;
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 2rem;
   }
   
   .login-text {
-    font-size: 2vw;
+    font-size: clamp(1.75rem, 2.5vw, 3rem);
     padding-bottom: 20px;
+    text-align: center;
   }
   
   .login-box {
-    flex: 0.7;
+    flex: 1;
     background-color: white;
     border-radius: 20px;
     margin: 10px;
+    padding: 2rem;
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
     color: #63d7b0;
     font-weight: bolder;
@@ -304,11 +329,17 @@
     align-items: center;
     gap: 20px;
   }
+
+  .login-box .MuiTextField-root,
+  .createGroups-container .search-box {
+    width: min(100%, 380px);
+  }
   
   .list-container {
-    flex: 0.7;
+    flex: 1;
     display: flex;
     flex-direction: column;
+    min-width: 0;
   }
   
   .ug-header {
@@ -329,13 +360,14 @@
     /* align-self: flex-start; */
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
     font-weight: bolder;
+    overflow-wrap: anywhere;
     
     
   }
   
   .ug-list {
     flex: 1;
-    overflow: scroll;
+    overflow: auto;
     scrollbar-width: none;
     padding: 10px;
   }
@@ -347,6 +379,7 @@
   .list-tem {
     display: flex;
     align-items: center;
+    gap: 10px;
     background-color: white;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
       rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
@@ -373,31 +406,142 @@
     display: flex;
     flex: 1;
     justify-content: space-evenly;
+    flex-wrap: wrap;
+    gap: 6px;
   }
   
-  @media only screen and (max-width: 40em) {
-    .sb-search {
-      display: none;
+  @media only screen and (max-width: 64em) {
+    .main-container,
+    .login-container {
+      width: 100%;
+      min-height: calc(100vh - 2rem);
     }
-    .sb-conversations {
-      display: none;
-    }
-    .sb-header {
-      flex-direction: column;
-      flex: 1;
-      width: min-content;
-    }
-    .other-icons {
-      flex-direction: column;
-    }
-    .chatArea-container {
-      flex: 1;
-    }
+
     .sidebar-container {
-      flex: 0;
+      flex-basis: 280px;
+      min-width: 240px;
     }
+  }
+
+  @media only screen and (max-width: 56em) {
+    .login-container {
+      flex-direction: column;
+    }
+
+    .image-container {
+      flex-basis: auto;
+      padding-bottom: 0;
+    }
+
+    .welcome-logo {
+      height: clamp(110px, 24vw, 180px);
+    }
+  }
+
+  @media only screen and (max-width: 48em) {
     .main-container {
-      height: 100vh;
+      flex-direction: column;
+      width: 100%;
+      min-height: calc(100vh - 2rem);
+    }
+
+    .sidebar-container {
+      flex: 0 0 auto;
+      min-width: 0;
+    }
+
+    .sb-header,
+    .sb-search,
+    .sb-conversations,
+    .chatArea-header,
+    .messages-container,
+    .text-input-area,
+    .ug-header,
+    .list-tem,
+    .createGroups-container,
+    .login-box {
+      border-radius: 16px;
+    }
+
+    .sb-conversations {
+      max-height: 35vh;
+    }
+
+    .welcome-container {
+      padding: 1.5rem;
+    }
+  }
+
+  @media only screen and (max-width: 40em) {
+    .main-container,
+    .login-container {
+      min-height: 100vh;
       width: 100vw;
+      border-radius: 0;
+    }
+
+    .image-container {
+      display: none;
+    }
+
+    .login-box {
+      margin: 0;
+      min-height: 100vh;
+      border-radius: 0;
+      padding: 1.5rem;
+    }
+
+    .sb-header,
+    .sb-search,
+    .sb-conversations,
+    .chatArea-header,
+    .messages-container,
+    .text-input-area,
+    .ug-header,
+    .list-tem,
+    .createGroups-container,
+    .welcome-container {
+      margin: 8px;
+    }
+
+    .sb-search {
+      display: flex;
+    }
+
+    .sb-conversations {
+      display: block;
+      max-height: 32vh;
+    }
+
+    .other-icons {
+      justify-content: center;
+    }
+
+    .con-icon {
+      height: 42px;
+      width: 42px;
+      font-size: 1.5rem;
+      margin-left: 0;
+    }
+
+    .conversation-container {
+      grid-template-columns: 42px auto;
+      column-gap: 8px;
+      margin: 4px 0;
+      padding: 8px 4px;
+    }
+
+    .messageBox,
+    .other-text-content {
+      max-width: 88%;
+    }
+
+    .createGroups-container {
+      flex-direction: row;
+      padding: 12px;
+    }
+
+    .welcome-container {
+      min-height: 40vh;
     }
   }
